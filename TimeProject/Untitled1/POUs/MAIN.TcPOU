@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{43234277-4774-44a3-bd16-428c45b77a36}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+//	stThisIsOurFirstInstanceOfAStructure : ST_Event;
+	bBoolean : BOOL;
+	eEventType1 : E_EventType := E_EventType.Alarm;
+	eEventSeverity1 : TcEventSeverity := TcEventSeverity.Error;
+	nEventIdentity1 : UDINT := 42;
+	sEventText1 : STRING(255) := 'This is a scarry event';
+
+	CsvPersistentEventStorage : FB_CsvPersistentEventStorage;
+	Eventlogger : EventLogger(CsvPersistentEventStorage);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bBoolean THEN
+	Eventlogger.AddEvent(eEventType1 , eEventSeverity1 , nEventIdentity1 , sEventText1);
+	bBoolean := FALSE;
+END_IF
+
+CsvPersistentEventStorage();]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="25" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="27" Count="1" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="11" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
